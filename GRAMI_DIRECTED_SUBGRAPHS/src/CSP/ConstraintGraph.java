@@ -19,36 +19,25 @@ along with Grami.  If not, see <http://www.gnu.org/licenses/>.
 
 package CSP;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-
-import pruning.SPpruner;
-
-import dataStructures.ConnectedComponent;
 import dataStructures.Graph;
 import dataStructures.Query;
-import dataStructures.myNode;
+import java.util.HashMap;
+import java.util.HashSet;
+import pruning.SPpruner;
 
-public class ConstraintGraph 
-{
-	private Variable[] variables;
-	private Query qry;
-	
-	public ConstraintGraph(Graph graph,Query qry,HashMap<Integer, HashSet<Integer>> nonCandidates) 
-	{
-		this.qry=qry;		
-		SPpruner sp = new SPpruner();
-		sp.getPrunedLists(graph, qry,nonCandidates);
-		variables= sp.getVariables();
-	}
-	
-	public Query getQuery()
-	{
-		return qry;
-	}
+public class ConstraintGraph {
+  private Variable[] variables;
+  private Query qry;
 
-	public Variable[] getVariables() {
-		return variables;
-	}
+  public ConstraintGraph(Graph graph, Query qry,
+                         HashMap<Integer, HashSet<Integer>> nonCandidates) {
+    this.qry = qry;
+    SPpruner sp = new SPpruner();
+    sp.getPrunedLists(graph, qry, nonCandidates);
+    variables = sp.getVariables();
+  }
+
+  public Query getQuery() { return qry; }
+
+  public Variable[] getVariables() { return variables; }
 }

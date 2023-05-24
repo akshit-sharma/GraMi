@@ -19,30 +19,26 @@ along with Grami.  If not, see <http://www.gnu.org/licenses/>.
 
 package CSP;
 
-public class VariablePair 
-{
-	public Variable v1;
-	public Variable v2;
-	public double edgeLabel;
-	
-	public VariablePair(Variable v1,Variable v2, double edgeLabel) 
-	{
-		this.v1=v1;
-		this.v2=v2;
-		this.edgeLabel = edgeLabel;
-	}
-	
-	public String getString()
-	{
-		String x = v1.getID()+"-"+edgeLabel+"-"+v2.getID();
-		return x;
-	}
-	
-	public int getMinValuesLength()
-	{
-		if(v1.getListSize()<v2.getListSize())
-			return v1.getListSize();
-		else
-			return v2.getListSize();
-	}
+public class VariablePair {
+  public Variable v1;
+  public Variable v2;
+  public double edgeLabel;
+
+  public VariablePair(Variable v1, Variable v2, double edgeLabel) {
+    this.v1 = v1;
+    this.v2 = v2;
+    this.edgeLabel = edgeLabel;
+  }
+
+  public String getString() {
+    String x = v1.getID() + "-" + edgeLabel + "-" + v2.getID();
+    return x;
+  }
+
+  public int getMinValuesLength() {
+    if (v1.getListSize() < v2.getListSize())
+      return v1.getListSize();
+    else
+      return v2.getListSize();
+  }
 }

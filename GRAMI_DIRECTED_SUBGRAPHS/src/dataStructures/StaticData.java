@@ -23,16 +23,15 @@ import java.util.HashMap;
 
 public class StaticData {
 
-	public static HashMap<String, HashMap<Integer, Integer>[]> hashedEdges;
-	public static int getHashedEdgesFreq(String sig)
-	{
-		HashMap<Integer, Integer>[] hm = hashedEdges.get(sig);
-		if(hm==null)
-			return 0;
-		int freq = hm[0].size();
-		if(freq>hm[1].size())
-			return hm[1].size();
-		return freq;
-	}
-	public static int counter = 0;
+  public static HashMap<String, HashMap<Integer, Integer>[]> hashedEdges;
+  public static int getHashedEdgesFreq(String sig) {
+    HashMap<Integer, Integer>[] hm = hashedEdges.get(sig);
+    if (hm == null)
+      return 0;
+    int freq = hm[0].size();
+    if (freq > hm[1].size())
+      return hm[1].size();
+    return freq;
+  }
+  public static int counter = 0;
 }

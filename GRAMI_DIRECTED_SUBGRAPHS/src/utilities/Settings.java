@@ -19,34 +19,33 @@ along with Grami.  If not, see <http://www.gnu.org/licenses/>.
 
 package utilities;
 
-public class Settings 
-{
+public class Settings {
 
-	public static boolean isApproximate=false;   //EXACT
-	public static double approxEpsilon = 0.0001;
-	public static double approxConstant = 100000;
-	
-	public static boolean isAutomorphismOn= true;
-	
-	public static boolean isDecomposeOn= true;
+  public static boolean isApproximate = false; // EXACT
+  public static double approxEpsilon = 0.0001;
+  public static double approxConstant = 100000;
 
-	public static boolean CACHING = true;
-	
-	public static boolean DISTINCTLABELS = true;
-	
-	public static boolean LimitedTime = true;
+  public static boolean isAutomorphismOn = true;
 
-	public static boolean PRINT = false;
-	
-	//datasets folder
-	public static String datasetsFolder = "../Datasets/";
-	
-	//given frequency, if not given then its value is -1
-	public static int frequency = -1;
-	
-	//the filename
-	public static String fileName = null;
-	
-	//the maximum number of the same label appears in the resulted pattern
-	public static int numLabelAppears = -1;	
+  public static boolean isDecomposeOn = true;
+
+  public static boolean CACHING = true;
+
+  public static boolean DISTINCTLABELS = true;
+
+  public static boolean LimitedTime = true;
+
+  public static boolean PRINT = false;
+
+  // datasets folder
+  public static String datasetsFolder = "../Datasets/";
+
+  // given frequency, if not given then its value is -1
+  public static int frequency = -1;
+
+  // the filename
+  public static String fileName = null;
+
+  // the maximum number of the same label appears in the resulted pattern
+  public static int numLabelAppears = -1;
 }
