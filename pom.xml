@@ -16,6 +16,11 @@
         </dependency>
     </dependencies>
 
+    <properties>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
     <build>
         <sourceDirectory>GRAMI_DIRECTED_SUBGRAPHS/src</sourceDirectory>
         <outputDirectory>GRAMI_DIRECTED_SUBGRAPHS/bin</outputDirectory>
@@ -32,7 +37,40 @@
                         <arg>GRAMI_DIRECTED_SUBGRAPHS/src</arg>
                     </compilerArgs>
                 </configuration>
-            </plugin>
+              </plugin>
+              <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>execute-program</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>java</executable>
+                            <classPathScope>./GRAMI_DIRECTED_SUBGRAPHS/bin/</classPathScope>
+                            <mainClass>Dijkstra.main</mainClass>
+                            <outputFile>${project.build.directory}/program-output.txt</outputFile>
+                            <arguments>
+                              <argument>-cp</argument>
+                              <argument>./GRAMI_DIRECTED_SUBGRAPHS/bin/</argument>
+                              <argument>Dijkstra.main</argument>
+                              <argument>freq=2</argument>
+                              <argument>filename=test10.lg</argument>
+                              <argument>datasetFolder=./Datasets/</argument>
+                              <argument>distance=1</argument> <!-- not useful in subgraphs (only valid for patterns) -->
+                              <argument>type=1</argument> <!-- directed -->
+                              <argument>maxLabelAppearance=-1</argument> <!-- no limit -->
+                              <argument>approximate=1.0</argument>
+                              <argument>approxConst=0.0</argument>
+                            </arguments>
+                        </configuration>
+                      </execution>
+                </executions>
+              </plugin>
         </plugins>
     </build>
 </project>
