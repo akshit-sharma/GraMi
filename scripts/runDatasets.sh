@@ -7,6 +7,8 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 RESET='\033[0m'  # Reset color
 
+timeout_human_duration="1m"
+
 mkdir -p timings/
 temp_dir=$(mktemp -d -t timing.XXXX)
 
@@ -33,8 +35,84 @@ send_signal() (
   return 0
 )
 
+show_progress() {
+  local duration=$1
+  local timeout_duration=$2
+  local progress_bar_width=$3
+  local java_pid=$4
+
+  local interval=10
+  local progress=0
+
+  while [ $duration -gt 0 ]; do
+
+    if ! ps -p ${java_pid} > /dev/null; then
+      local elapsed_seconds=$((timeout_duration - duration))
+      local elapsed_minutes=$((elapsed_seconds / 60))
+      local elapsed_hours=$((elapsed_minutes / 60))
+      local elapsed_time=$(printf "%02d:%02d:%02d" $elapsed_hours $elapsed_minutes $elapsed_seconds)
+
+      echo -ne "\r${GREEN}command finished${RESET}$(printf ' %.0s' $(seq 1 $progress_bar_width)) [Time Taken: <${elapsed_time}]"
+      echo
+      return
+    fi
+    # Calculate the progress percentage
+    local percentage=$((100 * (timeout_duration - duration) / timeout_duration))
+
+    # Calculate the remaining time
+    local remaining_seconds=$((duration % 60))
+    local remaining_minutes=$((remaining_seconds / 60 % 60))
+    local remaining_hours=$((remaining_minutes / 3600))
+    local remaining_time=$(printf "%02d:%02d:%02d" $remaining_hours $remaining_minutes $remaining_seconds)
+
+    # Calculate the number of filled and empty slots in the progress bar
+    local filled_slots=$((progress_bar_width * percentage / 100))
+    local empty_slots=$((progress_bar_width - filled_slots))
+
+    # Print the progress bar and remaining time
+    echo -ne "\r[${GREEN}$(printf '=%.0s' $(seq 1 $filled_slots))${RESET}$(printf ' %.0s' $(seq 1 $empty_slots))]"
+    echo -ne " ${percentage}% Remaining: ${remaining_time}"
+
+    # Wait for the interval
+    sleep $interval
+    duration=$((duration - interval))
+  done
+  #                                                                                          : 00:00:00
+  echo -ne "\r${YELLOW}command timed out${RESET}$(printf ' %.0s' $(seq 1 $progress_bar_width))          "
+  echo
+}
+
+convert_to_seconds() {
+  local time_string=$1
+
+  local seconds=0
+
+  # Check if the input contains hours
+  if [[ $time_string == *h* ]]; then
+    local hours_part="${time_string%%h*}"
+    seconds=$((seconds + hours_part * 3600))
+    time_string="${time_string#*h}"
+  fi
+
+  # Check if the input contains minutes
+  if [[ $time_string == *m* ]]; then
+    local minutes_part="${time_string%%m*}"
+    seconds=$((seconds + minutes_part * 60))
+    time_string="${time_string#*m}"
+  fi
+
+  # Check if the input contains seconds
+  if [[ $time_string == *s* ]]; then
+    local seconds_part="${time_string%%s*}"
+    seconds=$((seconds + seconds_part))
+  fi
+
+  echo "$seconds"
+  return 0
+}
+
 check_timeout() {
-  local timeout_duration=$1
+  local timeout_human=$1
   local time_pid=$2
   local filepath=$3
   shift 3
@@ -43,7 +121,9 @@ check_timeout() {
   java_pid=$(pgrep -P $time_pid java)
   echo -e "${YELLOW}timePid:${RESET} ${time_pid}${YELLOW}, javaPid:${RESET} ${java_pid}"
 
-  sleep "$timeout_duration"
+  timeout_duration=$(convert_to_seconds "$timeout_human")
+
+  show_progress $timeout_duration $timeout_duration 50 $java_pid
 
   process_terminated=0
   if [ -n "$java_pid" ] && [ -d "/proc/$java_pid" ]; then
@@ -78,12 +158,12 @@ run_command() {
   (/usr/bin/time -v ${command} 2>&1) >> ${tmpfilepath} &
   time_pid=$!
 
-  check_timeout "60" $time_pid $tmpfilepath $command
+  check_timeout ${timeout_human_duration} $time_pid $tmpfilepath $command
 
   filepath="timings/${filename}"
   mv ${tmpfilepath} ${filepath}
 }
 
 run_command "test10" 1
-run_command "p2p-Gnutella08" 100
 run_command "test10" 2
+run_command "p2p-Gnutella08" 100
