@@ -13,6 +13,8 @@ def commandParser():
     commands.add_argument('--json-dir', type=Path, default=Path('./artifacts/json'), help = 'Json directory')
     commands.add_argument('--csv-dir', type=Path, default=Path('./artifacts/csv'), help = 'csv directory')
     commands.add_argument('--subfolder', type=Path, default=Path('individuals'), help = 'subdirectory for individual runs')
+    commands.add_argument('--timings-data', type=Path, default=Path('./timings'), help = 'directory for timings data')
+    commands.add_argument('--consolidated-name', type=str, default='gramiTime', help = 'name of consolidated file')
     commands.add_argument('--verbose', help='Verbose output', action='store_true')
     commands.add_argument('--vvv', help='Very verbose output', action='store_true')
 
@@ -24,7 +26,7 @@ def writeBuffer(file, buffer):
         f.write('\n')
 
 def main(args):
-    directory = Path('./timings/')
+    directory = args.timings_data
     latex_subdir = args.latex_dir / args.subfolder
     json_subdir = args.json_dir / args.subfolder
     csv_subdir = args.csv_dir / args.subfolder
@@ -69,9 +71,9 @@ def main(args):
     df = pd.DataFrame(consolidatedResults, columns=['datagraph', 'support', 'approxA', 'Max Level Searched', 'Searched', 'Found', 'Max Level Freq', 'timeTaken (s)'])
     df = df.sort_values(by=['datagraph', 'support', 'approxA'], ascending=[True, False, False])
 
-    writeBuffer(args.latex_dir / f"gramiTime.tex", df.to_latex(index=False))
-    writeBuffer(args.json_dir / f"gramiTime.json", df.to_json(orient='table', index=True))
-    writeBuffer(args.csv_dir / f"gramiTime.csv", df.to_csv(index=False))
+    writeBuffer(args.latex_dir / f"{args.consolidated_name}.tex", df.to_latex(index=False))
+    writeBuffer(args.json_dir / f"{args.consolidated_name}.json", df.to_json(orient='table', index=True))
+    writeBuffer(args.csv_dir / f"{args.consolidated_name}.csv", df.to_csv(index=False))
 
 
 if __name__ == '__main__':

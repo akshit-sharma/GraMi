@@ -126,9 +126,6 @@ def processDirectory(dir, schema_dir, rows_dir):
         processSchema(schema_dir / schema_filename, schema)
         processRows(rows_dir / rows_filename, rows)
 
-
-
-
 def main(args):
     processDirectory(args.json_dir, args.table_schema, args.table_data)
 
