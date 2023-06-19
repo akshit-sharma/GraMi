@@ -46,9 +46,12 @@ public class main {
 
     Searcher<String, String> sr = null;
     StopWatch watch = new StopWatch();
-    watch.start();
+
+    StopWatch loadWatch = new StopWatch();
 
     try {
+
+      loadWatch.start();
       if (Settings.fileName == null) {
         System.out.println("You have to specify a filename");
         System.exit(1);
@@ -56,6 +59,12 @@ public class main {
         sr = new Searcher<String, String>(
             Settings.datasetsFolder + Settings.fileName, freq, 1);
       }
+      loadWatch.stop();
+
+      System.out.println("Loading and Preprocess Time: " + loadWatch.getElapsedTime() / 1000.0
+          + " seconds");
+
+      watch.start();
 
       sr.initialize();
       sr.search();
@@ -63,6 +72,9 @@ public class main {
       watch.stop();
 
       System.out.println("Time: " + watch.getElapsedTime() / 1000.0 + " seconds");
+
+      if (! Settings.OUTPUTVERBOSE)
+        return;
 
       // write output file for the following things:
       // 1- time
