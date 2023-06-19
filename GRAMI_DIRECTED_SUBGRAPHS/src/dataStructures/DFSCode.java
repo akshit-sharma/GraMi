@@ -186,7 +186,7 @@ public class DFSCode<NodeType, EdgeType>
     }
 
     // get "new" DFSCode object
-    if (currentVariables == null)
+    if (currentVariables == null && Settings.OUTPUTVERBOSE)
       System.out.println("noooooo!!");
     return new DFSCode<NodeType, EdgeType>(sortedFreqLabels, singleGraph,
                                            Util.clone(nonCandidates))
@@ -315,8 +315,9 @@ public class DFSCode<NodeType, EdgeType>
       //			}
 
       if (nonCandidates == null) {
-        System.out.println(
-            "-------------------------Looking into frequency of: " + this);
+        if (Settings.OUTPUTVERBOSE)
+          System.out.println(
+              "-------------------------Looking into frequency of: " + this);
         nonCandidates = new HashMap<Integer, HashSet<Integer>>();
         Query q = new Query((HPListGraph<Integer, Double>)me);
         if (Settings.CACHING) {
@@ -382,11 +383,13 @@ public class DFSCode<NodeType, EdgeType>
           DfscodesCache.cache.put(code, nonCands);
         }
 
-        System.out.println("Freq: " + freq);
+        if (Settings.OUTPUTVERBOSE)
+          System.out.println("Freq: " + freq);
         finalFrequency = new IntFrequency(freq);
       } else {
-        System.out.println(
-            "-------------------------Looking into frequency of: " + this);
+        if (Settings.OUTPUTVERBOSE)
+          System.out.println(
+              "-------------------------Looking into frequency of: " + this);
         Query q = new Query((HPListGraph<Integer, Double>)me);
 
         if (Settings.CACHING) {
@@ -456,7 +459,8 @@ public class DFSCode<NodeType, EdgeType>
           DfscodesCache.cache.put(code, nonCands);
         }
 
-        System.out.println("Freq: " + freq);
+        if (Settings.OUTPUTVERBOSE)
+          System.out.println("Freq: " + freq);
         finalFrequency = new IntFrequency(freq);
       }
       return finalFrequency;

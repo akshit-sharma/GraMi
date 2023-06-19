@@ -21,6 +21,8 @@ package dataStructures;
 
 // import Temp.SubsetReference;
 import Dijkstra.DijkstraEngine;
+import utilities.Settings;
+
 import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.File;
@@ -75,8 +77,9 @@ public class Graph {
 
     if (StaticData.hashedEdges != null) {
       StaticData.hashedEdges = null;
-      System.out.println(
-          StaticData.hashedEdges.hashCode()); // throw exception if more than
+      if (Settings.OUTPUTVERBOSE)
+        System.out.println(
+            StaticData.hashedEdges.hashCode()); // throw exception if more than
                                               // one graph was created
     }
     StaticData.hashedEdges = new HashMap<String, HashMap<Integer, Integer>[]>();
@@ -176,7 +179,8 @@ public class Graph {
       final int index = Integer.parseInt(parts[1]);
       final int label = Integer.parseInt(parts[2]);
       if (index != counter) {
-        System.out.println(index + " " + counter);
+        if (Settings.OUTPUTVERBOSE)
+          System.out.println(index + " " + counter);
         throw new ParseException("The node list is not sorted", counter);
       }
 
@@ -268,8 +272,9 @@ public class Graph {
          it.hasNext();) {
       java.util.Map.Entry<Integer, HashMap<Integer, myNode>> ar = it.next();
 
-      System.out.println("Freq Label: " + ar.getKey() +
-                         " with size: " + ar.getValue().size());
+      if (Settings.OUTPUTVERBOSE)
+        System.out.println("Freq Label: " + ar.getKey() +
+            " with size: " + ar.getValue().size());
     }
   }
 
@@ -285,7 +290,7 @@ public class Graph {
       for (Iterator<myNode> iterator = freqNodes.values().iterator();
            iterator.hasNext();) {
         myNode node = iterator.next();
-        System.out.println(counter++);
+        //System.out.println(counter++);
         node.setReachableNodes_1hop(this, freqNodesByLabel);
       }
     }
@@ -303,7 +308,7 @@ public class Graph {
            iterator.hasNext();) {
         myNode node = iterator.next();
         dj.execute(node.getID(), null);
-        System.out.println(counter++);
+        //System.out.println(counter++);
         node.setReachableNodes(dj, freqNodesByLabel, this.getListGraph());
       }
     }

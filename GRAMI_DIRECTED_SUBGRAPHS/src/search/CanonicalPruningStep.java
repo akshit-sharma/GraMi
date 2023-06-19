@@ -18,6 +18,8 @@ import dataStructures.Canonizable;
 import dataStructures.Extension;
 import java.util.Collection;
 
+import utilities.Settings;
+
 /**
  * This class implements the general pruning of non-canonical fragments.
  *
@@ -53,13 +55,16 @@ public class CanonicalPruningStep<NodeType, EdgeType>
                    final Collection<Extension<NodeType, EdgeType>> extensions) {
     final Canonizable can = (Canonizable)node;
 
-    System.out.println("calculating is Canonical?...");
+    if (Settings.OUTPUTVERBOSE)
+      System.out.println("calculating is Canonical?...");
     if (can.isCanonical()) {
-      System.out.println("....is Canonical");
+      if (Settings.OUTPUTVERBOSE)
+        System.out.println("....is Canonical");
       this.callNext(node, extensions);
 
     } else {
-      System.out.println("....is NOT Canonical");
+      if (Settings.OUTPUTVERBOSE)
+        System.out.println("....is NOT Canonical");
       node.store(false);
     }
   }

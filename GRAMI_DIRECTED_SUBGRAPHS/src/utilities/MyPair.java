@@ -37,7 +37,8 @@ public class MyPair<A, B> {
   @Override
   public boolean equals(Object aThat) {
     Object t = null;
-    System.out.println(t.toString());
+    if (Settings.OUTPUTVERBOSE)
+      System.out.println(t.toString());
     // check for self-comparison
     if (this == aThat)
       return true;

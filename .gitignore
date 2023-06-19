@@ -4,3 +4,5 @@ GRAMI_DIRECTED_SUBGRAPHS/bin/
 .project
 .settings/
 Output.txt
+timings/
+artifacts/

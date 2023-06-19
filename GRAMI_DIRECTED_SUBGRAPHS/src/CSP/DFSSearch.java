@@ -358,7 +358,7 @@ public class DFSSearch {
         int preIndex = hasBeenPrecomputed(autos, preComputed, i);
         if (i != preIndex) {
           search = false;
-          if (Settings.PRINT)
+          if (Settings.PRINT || Settings.OUTPUTVERBOSE)
             System.out.println(
                 "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$it has automorphisms");
 
@@ -392,13 +392,13 @@ public class DFSSearch {
           myNode firstNode = iterator.next();
           // if already marked dont search it
           if (result[index].getList().containsKey(firstNode.getID())) {
-            if (Settings.PRINT)
+            if (Settings.PRINT || Settings.OUTPUTVERBOSE)
               System.out.println("ALready searched before !!");
             continue;
           }
           sOrder.reset();
           instance.assign(firstVB.getID(), firstNode);
-          if (Settings.PRINT)
+          if (Settings.PRINT || Settings.OUTPUTVERBOSE)
             System.out.println(instance);
 
           timer = new Timer(true);
@@ -431,7 +431,7 @@ public class DFSSearch {
             tmp.add(firstNode);
             TimedOutSearchStats.totalNumber++;
 
-            if (Settings.PRINT)
+            if (Settings.PRINT || Settings.OUTPUTVERBOSE)
               System.out.println("passed the time threshold!!");
             isStopped = false;
           }
@@ -467,9 +467,9 @@ public class DFSSearch {
                   nonCan.add(firstNode.getID());
               }
             }
-            if (Settings.PRINT)
+            if (Settings.PRINT || Settings.OUTPUTVERBOSE)
               System.out.println(
-                  "ERRRRRRRRRRRRRRRRRRR........................................Not Found: ");
+                  "ERRRRRRRRRRRRRRRRRRR........................................Not Found1: ");
           }
           if (value == -1) {
             // instance Found
@@ -497,7 +497,7 @@ public class DFSSearch {
             if (result[index].getList().size() >= minFreqThreshold)
               break;
           } else if (value >= 0)
-            if (Settings.PRINT)
+            if (Settings.PRINT || Settings.OUTPUTVERBOSE)
               System.out.println(
                   "ERRRRRRRRRRRRRRRRRRR........................................Value: " +
                   value);
@@ -508,17 +508,20 @@ public class DFSSearch {
         // Timedout search
         if (Settings.isApproximate == false)
           if (result[index].getList().size() < minFreqThreshold) {
-            System.out.println("into TMP Part 1");
+            if (Settings.PRINT || Settings.OUTPUTVERBOSE)
+              System.out.println("into TMP Part 1");
             // fast check
             if (result[index].getList().size() + tmp.size() < minFreqThreshold)
               return;
             if (Settings.isApproximate == true) {
             } else // TRULY SEARCH INTO IT!!
             {
-              System.out.println("into TMP Part 2");
+              if (Settings.PRINT || Settings.OUTPUTVERBOSE)
+                System.out.println("into TMP Part 2");
               for (int j = 0; j < tmp.size(); j++) {
-                System.out.println("found: " + result[index].getList().size() +
-                                   " tmp: " + tmp.size() + " j: " + j);
+                if (Settings.PRINT || Settings.OUTPUTVERBOSE)
+                  System.out.println("found: " + result[index].getList().size() +
+                      " tmp: " + tmp.size() + " j: " + j);
                 if ((result[index].getList().size() + (tmp.size() - j)) <
                     minFreqThreshold)
                   return;
@@ -547,7 +550,7 @@ public class DFSSearch {
                                         ArrayList<Integer>>> iterator =
                              edgeRemoved.entrySet().iterator();
                          iterator.hasNext();) {
-                      System.out.println(counter++);
+                      //System.out.println(counter++);
                       Entry<HPListGraph<Integer, Double>, ArrayList<Integer>>
                           removedEdgeEntry = iterator.next();
                       HPListGraph<Integer, Double> listGraph =
@@ -611,7 +614,7 @@ public class DFSSearch {
                 myNode firstNode = tmp.get(j);
                 sOrder.reset();
                 instance.assign(firstVB.getID(), firstNode);
-                if (Settings.PRINT)
+                if (Settings.PRINT || Settings.OUTPUTVERBOSE)
                   System.out.println(instance);
                 // TODO
                 int value;
@@ -648,12 +651,13 @@ public class DFSSearch {
                         nonCan.add(firstNode.getID());
                     }
                   }
-                  if (Settings.PRINT)
+                  if (Settings.PRINT || Settings.OUTPUTVERBOSE)
                     System.out.println(
-                        "ERRRRRRRRRRRRRRRRRRR........................................Not Found: ");
+                        "ERRRRRRRRRRRRRRRRRRR........................................Not Found2: ");
                 }
                 if (value == -1) {
-                  System.out.println("Found...");
+                  if (Settings.OUTPUTVERBOSE)
+                    System.out.println("Found...");
                   // instance Found
                   for (int k = 0; k < variables.length; k++) {
                     myNode assignedNode = instance.getAssignment(k);
@@ -700,6 +704,8 @@ public class DFSSearch {
   }
 
   private void printVariablesSize(Variable[] vars) {
+    if (!Settings.OUTPUTVERBOSE)
+      return;
     for (int i = 0; i < vars.length; i++) {
       System.out.println("Var[" + i + "]" + vars[i].getList().size());
     }
@@ -1211,7 +1217,7 @@ public class DFSSearch {
     Variable firstVB = variables[index];
     HashMap<Integer, myNode> firstList = firstVB.getList();
 
-    int tempCounter = 0;
+    //int tempCounter = 0;
 
     AssignmentInstance instance = new AssignmentInstance(variables.length);
 
@@ -1219,9 +1225,10 @@ public class DFSSearch {
          iterator.hasNext();) {
       myNode firstNode = iterator.next();
       instance.assign(firstVB.getID(), firstNode);
-      System.out.println(tempCounter++);
+      //System.out.println(tempCounter++);
       search(instance);
     }
+
   }
 
   // insert vp into order according to their variable values length

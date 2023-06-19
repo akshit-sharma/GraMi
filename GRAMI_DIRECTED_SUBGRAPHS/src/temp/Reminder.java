@@ -19,6 +19,8 @@ along with Grami.  If not, see <http://www.gnu.org/licenses/>.
 
 package temp;
 
+/*
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -61,3 +63,5 @@ public class Reminder {
     System.out.format("Task scheduled.");
   }
 }
+
+*/

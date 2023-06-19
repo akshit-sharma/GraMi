@@ -28,6 +28,8 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Stack;
 
+import utilities.Settings;
+
 public class Decomposer<NodeType, EdgeType> {
 
   DFSCode<NodeType, EdgeType> code;
@@ -52,6 +54,8 @@ public class Decomposer<NodeType, EdgeType> {
   }
 
   public void printResults() {
+    if (! Settings.OUTPUTVERBOSE)
+      return;
     for (int i = 0; i < mappings.size(); i++) {
       HashMap<HPListGraph<NodeType, EdgeType>, ArrayList<Integer>> currentMap =
           mappings.get(i);

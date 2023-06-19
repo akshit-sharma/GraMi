@@ -20,6 +20,8 @@ along with Grami.  If not, see <http://www.gnu.org/licenses/>.
 package CSP;
 
 import dataStructures.myNode;
+import utilities.Settings;
+
 import java.util.HashSet;
 
 public class AssignmentInstance {
@@ -74,6 +76,8 @@ public class AssignmentInstance {
   public myNode getAssignment(int index) { return assignments[index]; }
 
   public void printInstance() {
+    if (! Settings.OUTPUTVERBOSE)
+      return;
     System.out.print("Assignment: ");
     for (int i = 0; i < assignments.length; i++) {
       myNode node = assignments[i];

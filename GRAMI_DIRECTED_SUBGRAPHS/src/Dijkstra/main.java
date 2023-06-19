@@ -62,6 +62,8 @@ public class main {
 
       watch.stop();
 
+      System.out.println("Time: " + watch.getElapsedTime() / 1000.0 + " seconds");
+
       // write output file for the following things:
       // 1- time
       // 2- number of resulted patterns
@@ -85,6 +87,9 @@ public class main {
       } catch (Exception e) {
         e.printStackTrace();
       }
+
+      if (Settings.OUTPUTVERBOSE)
+        System.out.println("Done");
 
     } catch (Exception e) {
       // TODO Auto-generated catch block

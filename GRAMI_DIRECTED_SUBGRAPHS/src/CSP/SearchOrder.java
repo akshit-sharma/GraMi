@@ -19,6 +19,8 @@ along with Grami.  If not, see <http://www.gnu.org/licenses/>.
 
 package CSP;
 
+import utilities.Settings;
+
 public class SearchOrder {
 
   private int[] order;

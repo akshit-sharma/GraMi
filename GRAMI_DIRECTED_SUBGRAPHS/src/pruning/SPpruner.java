@@ -32,6 +32,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 import utilities.MyPair;
+import utilities.Settings;
 
 public class SPpruner {
   private Variable[] variables;
@@ -67,7 +68,8 @@ public class SPpruner {
   public void
   getPrunedLists(HashMap<Integer, HashMap<Integer, myNode>> nodesByLabel,
                  Query qry) {
-    System.out.println("called Automorphism pruned lists");
+    if (Settings.OUTPUTVERBOSE)
+      System.out.println("called Automorphism pruned lists");
     HashMap<Integer, HashMap<Integer, myNode>> pruned =
         new HashMap<Integer,
                     HashMap<Integer, myNode>>(); // QueryID -> NodeID->NODE
@@ -176,7 +178,8 @@ public class SPpruner {
 
   public void getPrunedLists(Graph graph, Query qry,
                              HashMap<Integer, HashSet<Integer>> nonCandidates) {
-    System.out.println("called pruned lists");
+    if (Settings.OUTPUTVERBOSE)
+      System.out.println("called pruned lists");
     HashMap<Integer, HashMap<Integer, myNode>> pruned =
         new HashMap<Integer,
                     HashMap<Integer, myNode>>(); // QueryID -> NodeID->NODE
@@ -217,6 +220,7 @@ public class SPpruner {
       int nodeB = c.getIndexB();
       HashMap<Integer, Integer> nodeAmap = nodeOutLabelDegrees.get(nodeA);
       HashMap<Integer, Integer> nodeBmap = nodeInLabelDegrees.get(nodeB);
+
       if (nodeAmap == null) {
         nodeAmap = new HashMap<Integer, Integer>();
         nodeOutLabelDegrees.put(nodeA, nodeAmap);
@@ -331,7 +335,6 @@ public class SPpruner {
     }
 
     while (!Q.isEmpty()) {
-      System.out.println(Q.size());
       vp = Q.poll();
       contains.remove(vp.getString());
       Variable v1 = vp.v1;
@@ -428,10 +431,12 @@ public class SPpruner {
          it.hasNext();) {
       java.util.Map.Entry<Integer, HashMap<Integer, myNode>> ar = it.next();
 
-      System.out.println("New Freq Label: " + ar.getKey() +
-                         " with size: " + ar.getValue().size());
+      if (Settings.OUTPUTVERBOSE)
+        System.out.println("New Freq Label: " + ar.getKey() +
+            " with size: " + ar.getValue().size());
     }
 
-    System.out.println("-----------------------------");
+    if (Settings.OUTPUTVERBOSE)
+      System.out.println("-----------------------------");
   }
 }

@@ -32,9 +32,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
-// import javax.jws.Oneway;
-// import javax.rmi.CORBA.Util;
 import utilities.MyPair;
+import utilities.Settings;
 
 /**
  * Represents the right most extension of gSpan.
@@ -143,7 +142,8 @@ public class RightMostExtension<NodeType, EdgeType>
     callNext(node); // malhash aii lazma
   }
   protected final void extend(final DFSCode<NodeType, EdgeType> code) {
-    System.out.println("Extending code: " + code);
+    if (Settings.OUTPUTVERBOSE)
+      System.out.println("Extending code: " + code);
 
     final HPGraph<NodeType, EdgeType> subGraph = code.getHPlistGraph();
 
@@ -156,7 +156,7 @@ public class RightMostExtension<NodeType, EdgeType>
     ArrayList<Integer> sortedFreqLabels = singleGraph.getSortedFreqLabels();
 
     Variable[] vrs = code.getCurrentVariables();
-    if (vrs == null)
+    if (vrs == null && Settings.OUTPUTVERBOSE)
       System.out.println("aloooooooo");
     // find extensions of the last node;
     {

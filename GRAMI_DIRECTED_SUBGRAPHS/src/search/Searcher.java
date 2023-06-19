@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
 import utilities.MyPair;
+import utilities.Settings;
 
 public class Searcher<NodeType, EdgeType> {
 
@@ -66,7 +67,7 @@ public class Searcher<NodeType, EdgeType> {
     DenseRoutesMap x = new DenseRoutesMap(singleGraph);
     DijkstraEngine d = new DijkstraEngine(x, shortestDistance);
 
-    singleGraph.printFreqNodes();
+    //singleGraph.printFreqNodes();
     singleGraph.setShortestPaths_1hop();
   }
 
@@ -114,7 +115,7 @@ public class Searcher<NodeType, EdgeType> {
                       secondLabel);
 
               if (!initials.containsKey(gedge)) {
-                System.out.println(gedge);
+                //System.out.println(gedge);
 
                 final ArrayList<GSpanEdge<NodeType, EdgeType>> parents =
                     new ArrayList<GSpanEdge<NodeType, EdgeType>>(2);
@@ -153,8 +154,9 @@ public class Searcher<NodeType, EdgeType> {
              initials.entrySet().iterator();
          eit.hasNext();) {
       final DFSCode<NodeType, EdgeType> code = eit.next().getValue();
-      System.out.println("Initial with Gedge " + code.getLast() +
-                         " code: " + code);
+      if (Settings.OUTPUTVERBOSE)
+        System.out.println("Initial with Gedge " + code.getLast() +
+            " code: " + code);
 
       int labelA;
       int labelB;

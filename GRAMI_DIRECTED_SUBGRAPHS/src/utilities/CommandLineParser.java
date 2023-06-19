@@ -69,6 +69,9 @@ public class CommandLineParser {
       // limited time
       if (key.compareTo("limitedtime") == 0)
         Settings.LimitedTime = (value.compareTo("true") == 0);
+
+      if (key.compareTo("verbose") == 0)
+        Settings.OUTPUTVERBOSE = (value.compareTo("true") == 0);
     }
   }
 }

@@ -45,4 +45,8 @@ public class ConnectedComponent {
   public int getIndexB() { return indexB; }
 
   public double getEdgeLabel() { return edgeLabel; }
+
+  public String toString() {
+    return indexA + " " + labelA + " " + indexB + " " + labelB + " " + edgeLabel;
+  }
 }

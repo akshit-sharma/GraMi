@@ -37,6 +37,8 @@ public class Settings {
 
   public static boolean PRINT = false;
 
+  public static boolean OUTPUTVERBOSE = false;
+
   // datasets folder
   public static String datasetsFolder = "../Datasets/";
 

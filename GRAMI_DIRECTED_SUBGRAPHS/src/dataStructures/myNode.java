@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import utilities.MyPair;
+import utilities.Settings;
 
 public class myNode {
   private int ID;
