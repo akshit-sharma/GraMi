@@ -7,7 +7,7 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 RESET='\033[0m'  # Reset color
 
-timeout_human_duration="1m"
+timeout_human_duration="30m"
 
 mkdir -p timings/
 temp_dir=$(mktemp -d -t timing.XXXX)
@@ -164,6 +164,18 @@ run_command() {
   mv ${tmpfilepath} ${filepath}
 }
 
-run_command "test10" 1
-run_command "test10" 2
-run_command "p2p-Gnutella08" 100
+run_command_helper() {
+  local datagraph=$1
+  shift 1
+  local supports=("$@")
+  for support in "${supports[@]}"; do
+    run_command $datagraph $support 
+  done
+}
+
+#run_command_helper "test10" 1 2
+#run_command_helper "p2p-Gnutella08" 150 100 90 80 70 60 50 40 30
+#run_command_helper "soc-Slashdot0902" 8000 4000 3000 1000
+#run_command_helper "soc-Epinions1" 8000 4000 3000 1000
+run_command_helper "wiki-Vote" 700 600 500 400 300 200 100
+
